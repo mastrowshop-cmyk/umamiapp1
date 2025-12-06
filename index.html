@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UmamiAPP - Мессенджер</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Окно авторизации -->
+    <div id="auth-screen" class="screen active">
+        <div class="auth-container">
+            <div class="logo">
+                <i class="fas fa-comment-dots"></i>
+                <h1>UmamiAPP</h1>
+                <p class="tagline">Связь, которая вдохновляет</p>
+            </div>
+            
+            <div class="auth-form">
+                <h2>Вход в аккаунт</h2>
+                
+                <div class="form-group">
+                    <label for="phone-number">Номер телефона</label>
+                    <div class="phone-input-group">
+                        <div class="country-code">+7</div>
+                        <input type="tel" id="phone-number" placeholder="999 123 45 67" maxlength="10">
+                    </div>
+                </div>
+                
+                <button id="login-btn" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Продолжить
+                </button>
+                
+                <div class="auth-info">
+                    <p>Нет аккаунта? Он создастся автоматически при первом входе.</p>
+                </div>
+            </div>
+            
+            <div class="demo-info">
+                <i class="fas fa-info-circle"></i>
+                <p>Демо-версия • Все данные сохраняются локально</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Главный экран мессенджера -->
+    <div id="main-screen" class="screen">
+        <!-- Боковая панель -->
+        <div class="sidebar">
+            <!-- Заголовок -->
+            <div class="sidebar-header">
+                <div class="user-profile">
+                    <img id="user-avatar" src="https://i.pravatar.cc/150?img=1" alt="Аватар" class="avatar">
+                    <div class="user-details">
+                        <h3 id="user-name">Гость</h3>
+                        <p id="user-status" class="status online">В сети</p>
+                    </div>
+                </div>
+                <button id="profile-btn" class="icon-btn" title="Настройки">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+
+            <!-- Поиск -->
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search-contacts" placeholder="Поиск контактов...">
+                </div>
+            </div>
+
+            <!-- Контакты -->
+            <div class="contacts-container">
+                <div class="contacts-header">
+                    <h4>Контакты</h4>
+                    <span class="badge" id="contacts-count">3</span>
+                </div>
+                <div class="contacts-list" id="contacts-list">
+                    <!-- Контакты загружаются через JS -->
+                </div>
+            </div>
+
+            <!-- Кнопки звонков -->
+            <div class="call-controls">
+                <button id="incoming-call-btn" class="btn call-btn incoming-call">
+                    <i class="fas fa-phone-incoming"></i>
+                    <span>Входящий звонок</span>
+                </button>
+                <button id="outgoing-call-btn" class="btn call-btn outgoing-call">
+                    <i class="fas fa-phone-outgoing"></i>
+                    <span>Исходящий звонок</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Область чата -->
+        <div class="chat-area">
+            <!-- Заголовок чата -->
+            <div class="chat-header">
+                <div class="chat-partner">
+                    <img id="contact-avatar" src="https://i.pravatar.cc/150?img=2" alt="Аватар" class="avatar">
+                    <div class="partner-info">
+                        <h3 id="contact-name">Алексей</h3>
+                        <p id="contact-status" class="status online">В сети</p>
+                    </div>
+                </div>
+                <div class="chat-actions">
+                    <button class="icon-btn" title="Аудиозвонок">
+                        <i class="fas fa-phone-alt"></i>
+                    </button>
+                    <button class="icon-btn" title="Видеозвонок">
+                        <i class="fas fa-video"></i>
+                    </button>
+                    <button class="icon-btn" title="Ещё">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Сообщения -->
+            <div class="messages-container" id="messages-container">
+                <!-- Сообщения загружаются через JS -->
+            </div>
+
+            <!-- Ввод сообщения -->
+            <div class="message-input-container">
+                <div class="input-tools">
+                    <button class="icon-btn" title="Смайлики">
+                        <i class="far fa-smile"></i>
+                    </button>
+                    <button class="icon-btn" title="Прикрепить файл">
+                        <i class="fas fa-paperclip"></i>
+                    </button>
+                </div>
+                <input type="text" id="message-input" placeholder="Введите сообщение...">
+                <button id="send-btn" class="btn btn-send">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Окно звонка -->
+    <div id="call-screen" class="modal">
+        <div class="call-container">
+            <div class="call-header">
+                <button id="minimize-call" class="icon-btn">
+                    <i class="fas fa-window-minimize"></i>
+                </button>
+            </div>
+            
+            <div class="call-content">
+                <div class="caller-info">
+                    <img id="caller-avatar" src="https://i.pravatar.cc/150?img=3" alt="Аватар" class="call-avatar">
+                    <h2 id="caller-name">Мария</h2>
+                    <p id="call-type">Входящий звонок</p>
+                    <div class="call-timer" id="call-timer">00:00</div>
+                </div>
+                
+                <div class="call-controls-panel">
+                    <button id="mute-call" class="call-control-btn">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <button id="answer-call" class="call-control-btn accept">
+                        <i class="fas fa-phone-alt"></i>
+                    </button>
+                    <button id="decline-call" class="call-control-btn decline">
+                        <i class="fas fa-phone-slash"></i>
+                    </button>
+                    <button id="speaker-call" class="call-control-btn">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <audio id="ringtone" loop>
+                <source src="https://assets.mixkit.co/active_storage/sfx/286/286-preview.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+    </div>
+
+    <!-- Окно профиля -->
+    <div id="profile-modal" class="modal">
+        <div class="profile-container">
+            <div class="profile-header">
+                <h2>Настройки профиля</h2>
+                <button id="close-profile" class="icon-btn close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="profile-content">
+                <div class="avatar-section">
+                    <div class="avatar-preview">
+                        <img id="profile-avatar-preview" src="https://i.pravatar.cc/150?img=1" alt="Аватар" class="avatar-large">
+                    </div>
+                    <button id="change-avatar" class="btn btn-secondary">
+                        <i class="fas fa-camera"></i> Сменить аватар
+                    </button>
+                </div>
+                
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="profile-name">Имя</label>
+                        <input type="text" id="profile-name" value="Гость" class="form-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="profile-status">Статус</label>
+                        <input type="text" id="profile-status" value="В сети" class="form-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="profile-phone">Номер телефона</label>
+                        <input type="tel" id="profile-phone" value="+7 (999) 123-45-67" class="form-input" readonly>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button id="save-profile" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Сохранить изменения
+                        </button>
+                        <button id="logout-btn" class="btn btn-danger">
+                            <i class="fas fa-sign-out-alt"></i> Выйти
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Уведомления -->
+    <div id="notification" class="notification">
+        <div class="notification-content">
+            <i class="fas fa-bell"></i>
+            <span id="notification-text">Новое сообщение</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
